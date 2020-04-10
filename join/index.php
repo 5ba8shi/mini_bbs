@@ -18,7 +18,15 @@
 		if ($_POST['password'] === '') {
 			$error['password'] = 'blank';
 		}
-		
+
+		$fileName = $_FILES['image']['name'];
+		if(!empty($fileName)) {
+			$ext = substr($fileName, -3);
+			if ($ext != 'jpg' && $ext != 'gif' && $ext != 'png') {
+				$error['image'] = 'type';
+			}
+		}
+
 		if (empty($error)){
 			$image = date('YmdHis') . $_FILES['image']['name'];
 			move_uploaded_file($_FILES['image']['tmp_name'], '../member_picture/' . $image);
@@ -81,6 +89,12 @@
 						<dt>写真など</dt>
 						<dd>
 							<input type="file" name="image" size="35" value="test"  />
+							<?php if ($error['image'] === 'type' ): ?>
+								<p class="error">*画像はjpg,gif,pngのいずれかの形式でお願いします。</p>
+							<?php endif; ?>
+							<?php if(!empty($error)): ?>
+								<p class ="error">*恐れ入りますが、画像を改めて指定してアップして下さい</p>
+							<?php endif; ?>
 						</dd>
 					</dl>
 					<div><input type="submit" value="入力内容を確認する" /></div>
