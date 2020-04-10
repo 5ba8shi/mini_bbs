@@ -64,6 +64,9 @@
 						<dt>メールアドレス<span class="required">必須</span></dt>
 						<dd>
 							<input type="text" name="email" size="35" maxlength="255" value="<?php print (htmlspecialchars($_POST['email'], ENT_QUOTES)); ?>" />
+							<?php if ($error['email'] === 'blank'): ?>
+								<p class="error">*メールアドレスを入力して下さい</p>
+							<?php endif; ?>
 						</dd>
 						<dt>パスワード<span class="required">必須</span></dt>
 						<dd>
